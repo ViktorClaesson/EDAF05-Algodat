@@ -37,7 +37,7 @@ object Main {
     //   1: Keyword doesn't exist, so we add a new entry mapping (keyword -> ArrayBuffer(word))
     //   2: Keyword does exist, so we get the ArrayBuffer for the keyword already in the map, and append to it the word.
     nodes.foreach(node => allOneShorterSubstrings(node.toString).foreach(key => addToMap(map, key, node)))
-    nodes.foreach(node => node.setAdjacencyList(t4(map, node)))
+    nodes.foreach(node => node.setAdjacencyList(adjacencyList(map, node)))
 
     nodes
   }
@@ -57,7 +57,7 @@ object Main {
     arg.takeRight(4).sorted
   }
 
-  def t4(map: Map[String, ArrayBuffer[Node]], node: Node): Vector[Node] = {
+  def adjacencyList(map: Map[String, ArrayBuffer[Node]], node: Node): Vector[Node] = {
     map(lastFourCharactersSorted(node.toString)).filter(nodeX => !nodeX.eq(node)).toVector
   }
 }
