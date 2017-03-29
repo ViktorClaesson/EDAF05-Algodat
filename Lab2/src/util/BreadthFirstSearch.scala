@@ -1,13 +1,14 @@
-import scala.actors.remote.Node
+package util
+
 import scala.collection.mutable.{ArrayBuffer, HashSet, Queue}
 /**
   * Created by Sebastian on 22/03/2017.
   */
 object BFS {
 
-  def getShortestPath(root: Node, goal: Node): String ={
+  def getShortestPath(root: util.Node, goal: util.Node): String ={
 
-    var currentNode: Node = goal
+    var currentNode: util.Node = goal
     val path = ArrayBuffer(goal)
     val sb = new StringBuilder()
 
@@ -22,8 +23,8 @@ object BFS {
     path.reverse.mkString(" -> ")
   }
 
-  def getDistance(goal: Node): Int = {
-    def rec(current: Node, i: Int): Int = {
+  def getDistance(goal: util.Node): Int = {
+    def rec(current: util.Node, i: Int): Int = {
       if (current == null)
         return i
       else {
@@ -36,12 +37,12 @@ object BFS {
 
   //returns the distance between root and goal, and the goal node itself that contains
   //the start of the path to root
-  def build(root: Node, goal: Node): Node = {
+  def build(root: util.Node, goal: util.Node): util.Node = {
 
     root.parent = null
     goal.parent = null
-    val checked: HashSet[Node] = HashSet.empty[Node]
-    val queue: Queue[Node] = Queue(root)
+    val checked: HashSet[util.Node] = HashSet(root)
+    val queue: Queue[util.Node] = Queue(root)
 
     while(!queue.isEmpty){
       val currentNode = queue.dequeue()

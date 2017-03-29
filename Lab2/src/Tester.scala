@@ -1,3 +1,5 @@
+import util.{BFS, Node}
+
 import scala.io.Source
 
 /**
@@ -6,7 +8,7 @@ import scala.io.Source
 class Tester() {
 
   private def run(title: String, nodes: Vector[Node], pairs: Vector[(String, String)], ans: Vector[Int]): Unit = {
-    println(title)
+    println("-"*10 + title + "-"*10)
 
     for (i <- 0 until pairs.length) {
       val root = nodes.find(n => n.name == pairs(i)._1).get
