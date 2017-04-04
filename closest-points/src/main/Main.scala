@@ -1,8 +1,6 @@
 package main
 
 import point.Point
-import reader.ClosestPairs
-
 import scala.io.Source
 import java.io.File
 /**
@@ -11,13 +9,6 @@ import java.io.File
 object Main {
 
   def main(args: Array[String]): Unit = {
-    for(i <- 1 to 6) {
-      println(i)
-      val vec1 = ClosestPairs.read(i)
-      println(Algorithm.closest_pair(vec1))
-    }
-
-    val d = new File("data")
-    d.listFiles.foreach(println)
+    Tester.test()
   }
 }

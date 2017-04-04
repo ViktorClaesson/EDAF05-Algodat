@@ -10,23 +10,13 @@ import scala.collection.mutable.Map
   */
 object FileReader {
 
-
-}
-
-object Others{
-
-
-}
-
-object ClosestPairs{
-
-  def read(i: Int): Vector[Point] = {
-    val vec = Source.fromFile(s"data/close-pairs-$i-in.txt").getLines().filter(_ != "").filter(_ != " ").map(l => toPoint(l)).toVector
+  def read(name: String, dropEnd: Int): Vector[Point] = {
+    val vec = Source.fromFile(name).getLines().toVector.dropWhile(l => l != "NODE_COORD_SECTION").drop(1).filter(l => l != "" && l != " ").dropRight(dropEnd).map(l => toPoint(l))
     vec
   }
 
   def toPoint(line: String): Point = {
-    val split = line.split(" ")
+    val split = line.split(" ").filter(_.length != 0)
     val p = new Point(split(0), split(1), split(2))
     p
   }
