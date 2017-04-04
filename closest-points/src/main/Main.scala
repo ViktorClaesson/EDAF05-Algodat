@@ -15,23 +15,4 @@ object Main {
       println(brute_force(vec1))
     }
   }
-
-  def closest_pair(points: Vector[Point]): (Point, Point) = {
-    (null, null)
-  }
-
-  def brute_force(points: Vector[Point]): (Point, Point) = {
-    var pair: (Point, Point) = (null, null)
-    var lowestDist = Double.MaxValue
-    points.foreach(p1 => points.foreach(p2 => {
-      if(p1 != p2) {
-        val dist = p1.dist(p2)
-        if (dist < lowestDist) {
-          pair = (p1, p2)
-          lowestDist = dist
-        }
-      }
-    }))
-    pair
-  }
 }
