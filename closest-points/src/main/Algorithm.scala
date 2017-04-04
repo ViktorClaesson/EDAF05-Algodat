@@ -12,9 +12,10 @@ object Algorithm {
     val pxs = points.sortBy(_.getX)
     val pys = points.sortBy(_.getY)
 
+    return closest_pair_rec(pxs, pys)
   }
 
-  def closest_pair_rec(P_x: Vector[Point], P_y: Vector[Point]): (Point, Point) = {
+  private def closest_pair_rec(P_x: Vector[Point], P_y: Vector[Point]): (Point, Point) = {
     if(P_x.size <= 3)
       return base_case(P_x)
 
@@ -26,26 +27,41 @@ object Algorithm {
     val righty = rightx.sortBy(_.getY)
 
     val (q0, q1) = closest_pair_rec(leftx, lefty)
+    val q_dist = q0.dist(q1)
     val (r0, r1) = closest_pair_rec(rightx, righty)
+    val r_dist = r0.dist(r1)
+    var min_pair: (Point, Point) = (null, null)
+    var delta = Double.MaxValue
 
-    val delta = math.min(q0.dist(q1), r0.dist(r1));
-    val L_x = leftx.last  // x position of the Line L
+    if(q_dist < r_dist) {
+      min_pair = (q0, q1)
+      delta = q_dist
+    } else {
+      min_pair = (r0, r1)
+      delta = r_dist
+    }
+
+    val L_x = leftx.last.getX  // x position of the Line L
     val S_y = P_y.filter(p => Math.abs(L_x - p.getX) <= delta) // All points in P that are within delta distance of L
-
-    
 
     for(i <- 0 to S_y.length - 16) {
       val p = S_y(i)
       val (p1, p2, dist) = min_distance_to_point(p, S_y.slice(i + 1, i + 16))
-
+      if(dist < delta) {
+        delta = dist
+        min_pair = (p1, p2)
+      }
     }
+
+    return min_pair
   }
 
-  def base_case(P: Vector[Point]): (Point, Point) = {
-     ???
+  private def base_case(P: Vector[Point]): (Point, Point) = {
+    val v = P.toSet.subsets(2).toVector.minBy(s => {val v = s.toVector; v(0).dist(v(1))}).toVector
+    (v(0), v(1))
   }
 
-  def min_distance_to_point(p: Point, points: Vector[Point]): (Point, Point, Double) = {
+  private def min_distance_to_point(p: Point, points: Vector[Point]): (Point, Point, Double) = {
     var dist = Double.MaxValue
     var closest: Point = null
 

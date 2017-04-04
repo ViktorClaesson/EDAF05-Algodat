@@ -12,7 +12,7 @@ object Main {
     for(i <- 1 to 6) {
       println(i)
       val vec1 = ClosestPairs.read(i)
-      println(brute_force(vec1))
+      println(Algorithm.closest_pair(vec1))
     }
   }
 }
