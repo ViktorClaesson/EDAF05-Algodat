@@ -2,80 +2,73 @@ package main
 
 import point.Point
 
+import scala.collection.mutable.ArrayBuffer
+
 /**
   * Created by Sebastian on 04/04/2017.
   */
 object Algorithm {
 
-
   def closest_pair(points: Vector[Point]): (Point, Point) = {
     val pxs = points.sortBy(_.getX)
-    val pys = points.sortBy(_.getY)
-
-    return closest_pair_rec(pxs, pys)
+    closest_pair_rec(pxs)
   }
 
-  private def closest_pair_rec(P_x: Vector[Point], P_y: Vector[Point]): (Point, Point) = {
-    if(P_x.size <= 3)
-      return base_case(P_x)
+  // OBS! P needs to be sorted by X for this to work!
+  private def closest_pair_rec(P: Vector[Point]): (Point, Point) = {
+    // Base case, if we have three points it's easy enough to get the nearest points.
+    if(P.size <= 3)
+      return base_case(P)
 
-    //Split points in middle based on x coordinate
-    val split = P_x.splitAt(P_x.length / 2)
-    val leftx = split._1
-    val lefty = leftx.sortBy(_.getY)
-    val rightx = split._2
-    val righty = rightx.sortBy(_.getY)
+    //Split points into a left and right side
+    val split = P.splitAt(P.length / 2)
+    val left = split._1
+    val right = split._2
 
-    val (q0, q1) = closest_pair_rec(leftx, lefty)
-    val q_dist = q0.dist(q1)
-    val (r0, r1) = closest_pair_rec(rightx, righty)
-    val r_dist = r0.dist(r1)
-    var min_pair: (Point, Point) = (null, null)
-    var delta = Double.MaxValue
+    // Get the min distance in the left side and min distance in the right side by recursion
+    val left_min = closest_pair_rec(left)
+    val right_min = closest_pair_rec(right)
+    // Get the min pair of the two given by left/right
+    val min_pair = Vector(left_min, right_min).minBy(s => s._1.dist(s._2))
+    // Get the lowest distance at this point
+    val delta = min_pair._1.dist(min_pair._2)
 
-    if(q_dist < r_dist) {
-      min_pair = (q0, q1)
-      delta = q_dist
-    } else {
-      min_pair = (r0, r1)
-      delta = r_dist
-    }
+    // Get the x coordinate of the Line L (Which is the line in the middle)
+    val Line_x = left.last.getX
+    // Get all points in P (sorted by Y) that are within delta distance of L
+    val S = P.sortBy(p => p.getY).filter(p => Math.abs(Line_x - p.getX) <= delta)
 
-    val L_x = leftx.last.getX  // x position of the Line L
-    val S_y = P_y.filter(p => Math.abs(L_x - p.getX) <= delta) // All points in P that are within delta distance of L
-
-    for(i <- 0 until S_y.length) {
-      val p = S_y(i)
-      val (p1, p2, dist) = min_distance_to_point(p, S_y.slice(i + 1, i + 16))
-      if(dist < delta) {
-        delta = dist
-        min_pair = (p1, p2)
-      }
-    }
-
-    return min_pair
+    // Combine the min pair from before with the min of the conquer algorithm,
+    // then get the min of all the pairs
+    (min_pair +: min_pairs(S)).minBy(s => s._1.dist(s._2))
   }
 
+  /*
+   - The algorithm described in the book for getting all the minimal pairs near to the line L
+   */
+  private def min_pairs(S: Vector[Point]): Vector[(Point, Point)] = {
+    S.zipWithIndex.filter(s => s._2 != S.length - 1).map(s => closest_from_point(s._1, S.slice(s._2 + 1, s._2 + 16)))
+  }
+
+  /*
+   - Returns the closest point pair from point -> one in points
+   */
+  private def closest_from_point(p: Point, points: Vector[Point]): (Point, Point) = {
+    Vector.fill(points.length)(p).zip(points).minBy(s => s._1.dist(s._2))
+  }
+
+  /*
+   - Get all possible subsets of length 2 = s
+   - Then get the minimum in respect to distance between the points
+   */
   private def base_case(P: Vector[Point]): (Point, Point) = {
-    val v = P.toSet.subsets(2).toVector.minBy(s => {val v = s.toVector; v(0).dist(v(1))}).toVector
+    val v = P.toSet.subsets(2).map(s => s.toVector).minBy(v => v(0).dist(v(1))).toVector
     (v(0), v(1))
   }
 
-  private def min_distance_to_point(p: Point, points: Vector[Point]): (Point, Point, Double) = {
-    var dist = Double.MaxValue
-    var closest: Point = null
-
-    points.foreach(p_ => {
-      val dist_ = p_.dist(p)
-      if (dist_ < dist) {
-        dist = dist_
-        closest = p_
-      }
-    })
-
-    (p, closest, dist)
-  }
-
+  /*
+   - Brute force attempt, too slow for big files.
+   */
   def brute_force(points: Vector[Point]): (Point, Point) = {
     var pair: (Point, Point) = (null, null)
     var lowestDist = Double.MaxValue
