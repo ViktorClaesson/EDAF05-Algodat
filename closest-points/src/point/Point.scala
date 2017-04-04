@@ -3,15 +3,15 @@ package point
 /**
   * Created by Sebastian on 04/04/2017.
   */
-class Point (private val x: String, private val y: String){
+class Point (private val x_ : String, private val y_ : String){
 
-  private val xd = x.toDouble
-  private val yd = y.toDouble
+  private val x = x_.toDouble
+  private val y = y_.toDouble
 
-  def getX() = xd
+  def getX() = x
 
-  def getY() = yd
+  def getY() = y
 
-  def dist(other: Point) = Math.sqrt(Math.pow((xd - other.getX()), 2) + Math.pow(yd-other.getY(), 2))
+  def dist(other: Point) = Math.sqrt(Math.pow((x - other.getX()), 2) + Math.pow(y - other.getY(), 2))
 
 }
