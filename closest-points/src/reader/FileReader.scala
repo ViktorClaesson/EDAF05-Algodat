@@ -15,8 +15,8 @@ object FileReader {
 
 object ClosestPairs{
 
-  def read(): Vector[Point] ={
-    val vec = Source.fromFile("data/close-pairs-1-in.txt").getLines().map(l => toPoint(l)).toVector
+  def read(i: Int): Vector[Point] = {
+    val vec = Source.fromFile(s"data/close-pairs-$i-in.txt").getLines().filter(_ != "").filter(_ != " ").map(l => toPoint(l)).toVector
     vec
   }
 
