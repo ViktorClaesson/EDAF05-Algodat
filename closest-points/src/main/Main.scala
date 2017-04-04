@@ -3,6 +3,8 @@ package main
 import point.Point
 import reader.ClosestPairs
 
+import scala.io.Source
+import java.io.File
 /**
   * Created by Sebastian on 04/04/2017.
   */
@@ -14,5 +16,8 @@ object Main {
       val vec1 = ClosestPairs.read(i)
       println(Algorithm.closest_pair(vec1))
     }
+
+    val d = new File("data")
+    d.listFiles.foreach(println)
   }
 }

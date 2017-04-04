@@ -13,6 +13,11 @@ object FileReader {
 
 }
 
+object Others{
+
+
+}
+
 object ClosestPairs{
 
   def read(i: Int): Vector[Point] = {

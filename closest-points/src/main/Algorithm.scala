@@ -44,7 +44,7 @@ object Algorithm {
     val L_x = leftx.last.getX  // x position of the Line L
     val S_y = P_y.filter(p => Math.abs(L_x - p.getX) <= delta) // All points in P that are within delta distance of L
 
-    for(i <- 0 to S_y.length - 16) {
+    for(i <- 0 until S_y.length) {
       val p = S_y(i)
       val (p1, p2, dist) = min_distance_to_point(p, S_y.slice(i + 1, i + 16))
       if(dist < delta) {
