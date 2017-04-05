@@ -14,7 +14,7 @@ object Tester {
 
   //Find all filenames
   val d = new File("data")
-  val filenames = d.listFiles.map(f => f.toString).filterNot(name => name.contains("README") || name.contains("closest-pair-out")).toVector
+  val filenames = d.listFiles.map(f => f.toString).filterNot(name => name.contains("README") || name.contains("closest-pair-out")).toVector.sorted
   val outs: Map[String, String] = Source.fromFile("data/closest-pair-out.txt").getLines().map(l => {
     val li = l.split(" ");
     li(0).drop(8).dropRight(5) -> li(2)

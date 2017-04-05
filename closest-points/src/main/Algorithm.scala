@@ -14,7 +14,7 @@ object Algorithm {
     closest_pair_rec(pxs)
   }
 
-  // OBS! P needs to be sorted by X for this to work!
+  // OBS! P needs to be sorted with respect to X for this to work!
   private def closest_pair_rec(P: Vector[Point]): (Point, Point) = {
     // Base case, if we have three points it's easy enough to get the nearest points.
     if(P.size <= 3)
