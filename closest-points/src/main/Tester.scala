@@ -12,8 +12,8 @@ object Tester {
 
   //Find all filenames
   val d = new File("data")
-  val filenames = d.listFiles.map(f => f.toString).filterNot(name => name.contains("README") || name.contains("closest-pair-out")).toVector
-  val outs = 
+  val filenames = d.listFiles.map(f => f.toString).filterNot(name => name.contains("README") || name.contains("closest-pair-out")).toVector.sorted
+  //val outs =
 
   def printFilenames(): Unit ={
     filenames.foreach(println)
