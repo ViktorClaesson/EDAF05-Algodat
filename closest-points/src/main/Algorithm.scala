@@ -36,7 +36,7 @@ object Algorithm {
     // Get the x coordinate of the Line L (Which is the line in the middle)
     val Line_x = left.last.getX
     // Get all points in P (sorted by Y) that are within delta distance of L
-    val S = P.sortBy(p => p.getY).filter(p => Math.abs(Line_x - p.getX) <= delta)
+    val S = P.filter(p => Math.abs(Line_x - p.getX) <= delta).sortBy(p => p.getY)
 
     // Combine the min pair from before with the min of the conquer algorithm,
     // then get the min of all the pairs

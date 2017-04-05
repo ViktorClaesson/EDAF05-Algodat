@@ -28,7 +28,8 @@ object Tester {
     filenames.foreach(println)
   }
 
-  def testAll(): Unit ={
+  def testAll(): Unit = {
+    printf("%26s: (%5s -> %6s) => [%6s, %6s]\n", "Name of the file", "Node1", "Node2", "Dist", "Answer")
     for(name <- filenames){
       testOne(name)
     }
