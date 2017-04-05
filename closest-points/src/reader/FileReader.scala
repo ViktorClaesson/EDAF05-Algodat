@@ -10,8 +10,13 @@ import scala.collection.mutable.Map
   */
 object FileReader {
 
-  def read(name: String, dropEnd: Int): Vector[Point] = {
-    val vec = Source.fromFile(name).getLines().toVector.dropWhile(l => l != "NODE_COORD_SECTION").drop(1).filter(l => l != "" && l != " ").dropRight(dropEnd).map(l => toPoint(l))
+  def read_other(name: String): Vector[Point] = {
+    val vec = Source.fromFile(name).getLines().toVector.dropWhile(l => !l.contains("NODE_COORD_SECTION")).drop(1).filter(l => l != "" && l != " ").dropRight(1).map(l => toPoint(l))
+    vec
+  }
+
+  def read_close(name: String): Vector[Point] ={
+    val vec = Source.fromFile(name).getLines().toVector.filter(l => l != "" && l != " ").map(l => toPoint(l))
     vec
   }
 

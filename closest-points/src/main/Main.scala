@@ -9,6 +9,6 @@ import java.io.File
 object Main {
 
   def main(args: Array[String]): Unit = {
-    Tester.test()
+    Tester.testAll()
   }
 }
