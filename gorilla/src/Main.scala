@@ -1,21 +1,20 @@
 /**
-<<<<<<< HEAD
+  * <<<<<<< HEAD
   * Created by viktor on 2017-04-25.
   */
 object Main {
 
-  def main(args: Array[String]) = {
-    val arr = CostMatrixReader.readMatrix2("data/BLOSUM62.txt")
-  }
-
-}
-=======
-  * Created by Sebastian on 25/04/2017.
-  */
-object Main {
-
   def main(args: Array[String]): Unit = {
-    CostMatrixReader.readMatrix(CostMatrixReader.costMatrix)
+
+    val costMatrix = CostMatrixReader.readMatrix("data/BLOSUM62.txt")
+    //costMatrix.foreach(l => println(l.mkString(", ")))
+
+    val al = new Alignment("KQRK", "KAK")
+    val cost = al.alignment(CostMatrixReader.readMatrix("data/BLOSUM62.txt"))
+    al.printMemoryMatrix()
+
+    println(cost)
+
+    println(al.aligned1 + "\n" + al.aligned2)
   }
 }
->>>>>>> 8881ff03f089e7aaf7941617938eb0e646edd4f3
