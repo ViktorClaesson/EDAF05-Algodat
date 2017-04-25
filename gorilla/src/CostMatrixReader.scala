@@ -15,5 +15,5 @@ object CostMatrixReader {
   def readMatrix(file: String): Array[Array[Int]] = {
     Source.fromFile(file).getLines().drop(7).map(arr => arr.drop(1).trim.split("\\s+")).map(_.map(_.toInt)).toArray;
   }
-  
+
 }
