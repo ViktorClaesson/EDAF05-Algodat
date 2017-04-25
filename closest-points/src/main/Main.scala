@@ -9,6 +9,12 @@ import java.io.File
 object Main {
 
   def main(args: Array[String]): Unit = {
-  Tester.testAll()
+    val time0 = System.currentTimeMillis()
+    Tester.testAll()
+    System.out.println(System.currentTimeMillis - time0)
+
+    val time1 = System.currentTimeMillis()
+    Tester.testAllSet()
+    System.out.println(System.currentTimeMillis - time1)
   }
 }

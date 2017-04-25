@@ -9,6 +9,43 @@ import scala.collection.mutable.ArrayBuffer
   */
 object Algorithm {
 
+  def closest_pair_set(points: Vector[Point]): (Point, Point) = {
+    val pxs = points.sortBy(_.getX)
+    val pys = points.sortBy(_.getY)
+    closest_pair_rec_set(pxs, pys)
+  }
+
+  // OBS! P needs to be sorted with respect to X for this to work!
+  private def closest_pair_rec_set(P: (Vector[Point], Vector[Point])): (Point, Point) = {
+    // Base case, if we have three points it's easy enough to get the nearest points.
+    if(P._1.size <= 3)
+      return base_case(P._1)
+
+    //Split points into a left and right side
+    val split = P._1.splitAt(P._1.length / 2)
+    val left_set = split._1.toSet
+    val right_set = split._2.toSet
+    val left = (split._1, P._2.filter(p => left_set.contains(p)))
+    val right = (split._2, P._2.filter(p => right_set.contains(p)))
+
+    // Get the min distance in the left side and min distance in the right side by recursion
+    val left_min = closest_pair_rec_set(left)
+    val right_min = closest_pair_rec_set(right)
+    // Get the min pair of the two given by left/right
+    val min_pair = Vector(left_min, right_min).minBy(s => s._1.dist(s._2))
+    // Get the lowest distance at this point
+    val delta = min_pair._1.dist(min_pair._2)
+
+    // Get the x coordinate of the Line L (Which is the line in the middle)
+    val Line_x = left._1.last.getX
+    // Get all points in P (sorted by Y) that are within delta distance of L
+    val S = P._2.filter(p => Math.abs(Line_x - p.getX) <= delta)
+
+    // Combine the min pair from before with the min of the conquer algorithm,
+    // then get the min of all the pairs
+    (min_pair +: min_pairs(S)).minBy(s => s._1.dist(s._2))
+  }
+
   def closest_pair(points: Vector[Point]): (Point, Point) = {
     val pxs = points.sortBy(_.getX)
     closest_pair_rec(pxs)

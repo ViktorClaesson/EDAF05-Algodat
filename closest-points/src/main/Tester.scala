@@ -28,7 +28,8 @@ object Tester {
     filenames.foreach(println)
   }
 
-  def testAll(): Unit ={
+  def testAll(): Unit = {
+    printf("%26s: (%5s -> %6s) => [%6s, %6s]\n", "Name of the file", "Node1", "Node2", "Dist", "Answer")
     for(name <- filenames){
       testOne(name)
     }
@@ -42,6 +43,26 @@ object Tester {
       printf("%26s: (%5s -> %6s) => [%6.2f, %6s]\n", name, p1.name, p2.name, p1.dist(p2), "N/A")
     }else{
       val (p1, p2) = Algorithm.closest_pair(FileReader.read_other(name))
+      //name + ": " + s"${p1.name} -> ${p2.name}: ${p1.dist(p2)}, Should be: ${ans.get}"
+      printf("%26s: (%5s -> %6s) => [%6.2f, %6.2f]\n", name, p1.name, p2.name, p1.dist(p2), ans.get.toDouble)
+    }
+  }
+
+  def testAllSet(): Unit = {
+    printf("%26s: (%5s -> %6s) => [%6s, %6s]\n", "Name of the file", "Node1", "Node2", "Dist", "Answer")
+    for(name <- filenames){
+      testOne(name)
+    }
+  }
+
+  def testOneSet(name: String): Unit ={
+    val ans = outs.get(name.drop(5).dropRight(8))
+    if(name.contains("close") || name.contains("wc-instance")){
+      val (p1, p2) = Algorithm.closest_pair_set(FileReader.read_close(name))
+      //name + ": " + s"${p1.name} -> ${p2.name}: ${p1.dist(p2)}, Should be: N/A"
+      printf("%26s: (%5s -> %6s) => [%6.2f, %6s]\n", name, p1.name, p2.name, p1.dist(p2), "N/A")
+    }else{
+      val (p1, p2) = Algorithm.closest_pair_set(FileReader.read_other(name))
       //name + ": " + s"${p1.name} -> ${p2.name}: ${p1.dist(p2)}, Should be: ${ans.get}"
       printf("%26s: (%5s -> %6s) => [%6.2f, %6.2f]\n", name, p1.name, p2.name, p1.dist(p2), ans.get.toDouble)
     }
