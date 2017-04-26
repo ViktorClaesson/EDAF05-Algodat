@@ -8,10 +8,11 @@ object Main {
     val costMatrix = CostMatrixReader.readMatrix("data/BLOSUM62.txt")
     //costMatrix.foreach(l => println(l.mkString(", ")))
 
-    val al = new Alignment("KAK", "KQRIKAAKABK")
+    val al = new Alignment("KQRIKAAKABK", "KAK")
     val cost = al.alignment(CostMatrixReader.readMatrix("data/BLOSUM62.txt"))
-    cost
     val aligned = al.buildWords(costMatrix)
-    println(aligned._1 + "\n" + aligned._2)
+    println(cost)
+    println(aligned._1)
+    println(aligned._2)
   }
 }
