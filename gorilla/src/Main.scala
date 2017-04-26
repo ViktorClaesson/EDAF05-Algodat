@@ -18,8 +18,9 @@ object Main {
 
     val al = new Alignment(str1, str2)
     val cost = al.alignment(CostMatrixReader.readMatrix("data/BLOSUM62.txt"))
-    cost
     val aligned = al.buildWords(costMatrix)
-    println(aligned._1 + "\n" + aligned._2)
+    println(cost)
+    println(aligned._1)
+    println(aligned._2)
   }
 }

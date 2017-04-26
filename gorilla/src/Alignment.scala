@@ -8,6 +8,8 @@ class Alignment(val str1: String, val str2: String) {
   val memoryMatrix = MemoryMatrix.createMatrix(str1, str2)
   var done: Boolean = false
 
+  // --------------------------------- FILLING MEMORYMATRIX ---------------------------------
+
   def alignment(costMatrix: Vector[Vector[Int]]): Int = {
     if (done)
       return memoryMatrix.last.last
@@ -19,6 +21,13 @@ class Alignment(val str1: String, val str2: String) {
     done = true
     memoryMatrix.last.last
   }
+
+  def opt(i: Int, j: Int, costMatrix: Vector[Vector[Int]]): Int = {
+    val max = getAlternatives(i, j, costMatrix).max
+    max
+  }
+
+  // --------------------------------- BUILDING WORDS ---------------------------------
 
   def buildWords(costMatrix: Vector[Vector[Int]]): (String, String) = {
     bind(buildWords(memoryMatrix.length - 1, memoryMatrix(0).length - 1, costMatrix), (str1.last.toString, str2.last.toString))
@@ -36,9 +45,7 @@ class Alignment(val str1: String, val str2: String) {
     }
   }
 
-  def bind(t0: (String, String), t1: (String, String)): (String, String) = {
-    (t0._1 + t1._1, t0._2 + t1._2)
-  }
+  // --------------------------------- HELP METHODS ---------------------------------
 
   def matrixValue(i: Int, j: Int): Int = {
     if (i < 0 || j < 0)
@@ -52,9 +59,8 @@ class Alignment(val str1: String, val str2: String) {
     Vector(getCost(str1(i - 1), str2(j - 1), costMatrix) + matrixValue(i - 1, j - 1), cost + matrixValue(i - 1, j), cost + matrixValue(i, j - 1))
   }
 
-  def opt(i: Int, j: Int, costMatrix: Vector[Vector[Int]]): Int = {
-    val max = getAlternatives(i, j, costMatrix).max
-    max
+  def bind(t0: (String, String), t1: (String, String)): (String, String) = {
+    (t0._1 + t1._1, t0._2 + t1._2)
   }
 
   def getCost(c1: Char, c2: Char, costMatrix: Vector[Vector[Int]]): Int = {
