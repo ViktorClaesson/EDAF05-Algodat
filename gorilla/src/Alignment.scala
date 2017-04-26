@@ -34,7 +34,7 @@ class Alignment(val str1: String, val str2: String) {
   }
 
   private def buildWords(i: Int, j: Int, costMatrix: Vector[Vector[Int]]): (String, String) = {
-    print(s"($i, $j) -> ")
+    //print(s"($j, $i) -> ")
     if(i == 0)
       return ("-" * j, "")
     if(j == 0)
