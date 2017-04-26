@@ -31,7 +31,7 @@ object AutomatedHbB {
 
     var i = 0
     while(i < results.length){
-      val names = results(i).takeWhile(c => c != ':').split("--").
+      val names = results(i).takeWhile(c => c != ':').split("--")
       val name1 = names(0)
       val name2 = names(1)
       val trueRes = results(i).dropWhile(c => c != ' ').trim.toInt
@@ -42,6 +42,7 @@ object AutomatedHbB {
       val alignment = new Alignment(prot1, prot2)
       val result = alignment.alignment(cMatrix)
       val words = alignment.buildWords(cMatrix)
+
 
       println(name1 + "--" + name2)
       if (result != trueRes) println(s"FAILED! Found: $result, expected $trueRes") else println(s"SUCCESS! $result = $trueRes")
