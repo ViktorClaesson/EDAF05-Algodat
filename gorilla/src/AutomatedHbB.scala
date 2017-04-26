@@ -31,7 +31,7 @@ object AutomatedHbB {
 
     var i = 0
     while(i < results.length){
-      val names = results(i).takeWhile(c => c != ':').split("--").
+      val names = results(i).takeWhile(c => c != ':').split("--")
       val name1 = names(0)
       val name2 = names(1)
       val trueRes = results(i).dropWhile(c => c != ' ').trim.toInt
