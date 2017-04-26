@@ -8,7 +8,7 @@ import scala.io.Source
 object MemoryMatrix {
 
   def createMatrix(fst: String, snd: String): ArrayBuffer[ArrayBuffer[Int]] ={
-    val matrix = ArrayBuffer.fill(fst.length)(ArrayBuffer.fill(snd.length)(0))
+    val matrix = ArrayBuffer.fill(fst.length + 1)(ArrayBuffer.fill(snd.length + 1)(0))
 
     matrix(0) = matrix(0).zipWithIndex.map(t => t._2 * CostMatrixReader.emptyCost)
 
