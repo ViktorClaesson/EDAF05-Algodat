@@ -6,19 +6,14 @@ import scala.collection.mutable.ArrayBuffer
 class Alignment(val str1: String, val str2: String) {
 
   val memoryMatrix = MemoryMatrix.createMatrix(str1, str2)
-  var done: Boolean = false
 
   // --------------------------------- FILLING MEMORYMATRIX ---------------------------------
 
   def alignment(costMatrix: Vector[Vector[Int]]): Int = {
-    if (done)
-      return memoryMatrix.last.last
-
     for (j <- 1 until memoryMatrix(0).length; i <- 1 until memoryMatrix.length) {
       memoryMatrix(i)(j) = opt(i, j, costMatrix)
     }
-    memoryMatrix(memoryMatrix.length - 1)(memoryMatrix(0).length - 1) += getCost(str1.length - 1, str2.length - 1, costMatrix)
-    done = true
+
     memoryMatrix.last.last
   }
 
@@ -34,11 +29,8 @@ class Alignment(val str1: String, val str2: String) {
   }
 
   private def buildWords(i: Int, j: Int, costMatrix: Vector[Vector[Int]]): (String, String) = {
-    //print(s"($j, $i) -> ")
-    if(i == 0)
-      return ("-" * j, "")
-    if(j == 0)
-      return ("", "-" * i)
+    if(i == 0 && j == 0)
+      return ("", "")
 
     val max = getAlternatives(i, j, costMatrix).zipWithIndex.max
     max._2 match {
