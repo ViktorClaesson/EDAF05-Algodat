@@ -31,7 +31,7 @@ object Builder {
       dest.addEdge(edgeToOrigin)
     })
 
-    nodes.foreach(n => println(s"${n.adjacencyString}"))
+    //nodes.foreach(n => println(s"${n.adjacencyString}"))
     nodes
   }
 }

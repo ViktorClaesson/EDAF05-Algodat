@@ -10,7 +10,7 @@ class Path (root: Node, goal: Node){
   val edges = ArrayBuffer.empty[Edge]
 
   def updateResidualCapacity() = {
-    val min = getMinResidualCapacity(root)
+    val min = getMinResidualCapacity(goal)
     edges.foreach(e => e.update(min))
   }
 
