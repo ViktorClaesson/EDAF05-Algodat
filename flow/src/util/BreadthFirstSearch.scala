@@ -50,10 +50,10 @@ object BFS {
       if(currentNode == goal)
         return true
 
-      for(e <- currentNode.getAdjacencyList; if !checked.contains(e.terminalNode); e.residualCapacity != 0){
+      for(e <- currentNode.getAdjacencyList; if !checked.contains(e.terminalNode) && e.residualCapacity != 0){
         checked.add(e.terminalNode)
         e.terminalNode.parent = currentNode
-        currentNode.child = e.terminalNode
+        //currentNode.child = e.terminalNode
         queue.enqueue(e.terminalNode)
       }
     }

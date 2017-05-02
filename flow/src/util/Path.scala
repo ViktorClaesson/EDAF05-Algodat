@@ -15,13 +15,13 @@ class Path (root: Node, goal: Node){
   }
 
   private def getMinResidualCapacity(current: Node): Int = {
-    if(current == goal)
+    if(current == root)
       return Integer.MAX_VALUE
 
-    val child = current.child
-    val edge = current.adjacencyList.find(e => e.terminalNode == child).get
+    val parent = current.parent
+    val edge = parent.adjacencyList.find(e => e.terminalNode == current).get
     edges += edge
     val cap = edge.residualCapacity
-    return math.min(cap, getMinResidualCapacity(child))
+    return math.min(cap, getMinResidualCapacity(parent))
   }
 }
