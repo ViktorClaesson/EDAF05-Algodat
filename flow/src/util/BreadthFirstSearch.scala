@@ -40,6 +40,8 @@ object BFS {
   def build(root: util.Node, goal: util.Node): util.Node = {
 
     root.parent = null
+    root.child = null
+    goal.child = null
     goal.parent = null
     val checked: HashSet[util.Node] = HashSet(root)
     val queue: Queue[util.Node] = Queue(root)
@@ -53,6 +55,7 @@ object BFS {
       for(e <- currentNode.getAdjacencyList; if !checked.contains(e.terminalNode)){
         checked.add(e.terminalNode)
         e.terminalNode.parent = currentNode
+        currentNode.child = e.terminalNode
         queue.enqueue(e.terminalNode)
       }
     }

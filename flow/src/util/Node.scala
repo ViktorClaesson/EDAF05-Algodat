@@ -1,5 +1,4 @@
 package util
-
 /**
   * Created by Sebastian on 22/03/2017.
   */
@@ -7,6 +6,7 @@ class Node (val name: String, val index: Int) {
 
   var adjacencyList: Vector[Edge] = Vector.empty[Edge]
   var parent: Node = null
+  var child: Node = null
 
   def setAdjacencyList(list: Vector[Edge]): Unit = adjacencyList = list
 
@@ -21,7 +21,7 @@ class Node (val name: String, val index: Int) {
   def adjacencyString: String = toString + " -> (" + adjacencyList.mkString(", ") + ")"
 
    override def equals(o: Any) = o match {
-    case that: Node => that.name == name
+    case that: Node => that.index == index
     case _ => false
   }
 
