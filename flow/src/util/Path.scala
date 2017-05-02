@@ -1,35 +1,27 @@
 package util
 
+import scala.collection.mutable.ArrayBuffer
+
 /**
   * Created by Sebastian on 02/05/2017.
   */
 class Path (root: Node, goal: Node){
 
-  def getMinResidualCapacity(): Int ={
-    getMin(root, goal)
+  val edges = ArrayBuffer.empty[Edge]
 
-    /*
-    var currentNode = root
-    var child = currentNode.child
-    var min = currentNode.adjacencyList.find(e => e.terminalNode == child).get.residualCapacity
-
-    while(currentNode != goal){
-      child = currentNode.child
-      val cap = child.adjacencyList.find(e => e.terminalNode == child).get.residualCapacity
-
-      if(cap < min) min = cap
-    }
-
-    min
-    */
+  def update(): Int ={
+    val min = getMin(root)
+    
   }
 
-  def getMin(current: Node, goal: Node): Int = {
+  def getMin(current: Node): Int = {
     if(current == goal)
       return Integer.MAX_VALUE
 
     val child = current.child
-    val cap = current.adjacencyList.find(e => e.terminalNode == child).get.residualCapacity
-    return math.min(cap, getMin(child, goal))
+    val edge = current.adjacencyList.find(e => e.terminalNode == child).get
+    edges += edge
+    val cap = edge.residualCapacity
+    return math.min(cap, getMin(child))
   }
 }
