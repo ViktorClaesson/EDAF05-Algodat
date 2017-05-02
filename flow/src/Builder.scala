@@ -21,8 +21,14 @@ object Builder {
       val orig: Node = nodes.find(n => n.index == split(0).toInt).get
       val dest: Node = nodes.find(n => n.index == split(1).toInt).get
       val capacity: Int = split(2).toInt
-      orig.addEdge(new Edge(dest, capacity))
-      dest.addEdge(new Edge(orig, capacity))
+
+      val edgeToDest = new Edge(orig, dest, capacity)
+      val edgeToOrigin = new Edge(dest, orig, capacity)
+      edgeToDest.siblingEdge = edgeToOrigin
+      edgeToOrigin.siblingEdge = edgeToDest
+
+      orig.addEdge(edgeToDest)
+      dest.addEdge(edgeToOrigin)
     })
 
     nodes.foreach(n => println(s"${n.adjacencyString}"))

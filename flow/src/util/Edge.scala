@@ -5,7 +5,9 @@ package util
   */
 class Edge (val startingNode: Node, val terminalNode: Node, val capacity: Int){
 
-  var residualCapacity = capacity
+  var residualCapacity: Int = capacity
+
+  var siblingEdge: Edge = null
 
   override def toString: String = s"[$capacity]- ${34.toChar}$terminalNode${34.toChar}"
 }

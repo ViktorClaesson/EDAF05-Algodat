@@ -6,7 +6,7 @@ class Node (val name: String, val index: Int) {
 
   var adjacencyList: Vector[Edge] = Vector.empty[Edge]
   var parent: Node = null
-  var edge: Edge = null
+  var child: Node = null
 
   def setAdjacencyList(list: Vector[Edge]): Unit = adjacencyList = list
 
