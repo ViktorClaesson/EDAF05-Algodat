@@ -5,7 +5,7 @@ package util
   */
 class Path (root: Node, goal: Node){
 
-  def getMinResidualCapacity(): Int ={
+  def getMinResidualCapacity(): Int = {
 
     var currentNode = root
     var child = currentNode.child
