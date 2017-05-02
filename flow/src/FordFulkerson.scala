@@ -5,14 +5,11 @@ import util.{BFS, Node, Path}
   */
 class FordFulkerson {
 
-  def augment(): Unit ={
-    //val b = bottleneck()
-  }
+  def augment(s: Node, t: Node): Unit ={
+    val path: Path = new Path(s,t)
+    BFS.build(s,t)
 
-  def bottleneck(s: Node, t: Node): Int = {
-    BFS.build(s, t)
-    val path = new Path(s, t)
-    path.getMinResidualCapacity()
+    val b = path.getMinResidualCapacity()
   }
 
 }

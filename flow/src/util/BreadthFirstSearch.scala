@@ -40,8 +40,6 @@ object BFS {
   def build(root: util.Node, goal: util.Node): util.Node = {
 
     root.parent = null
-    root.child = null
-    goal.child = null
     goal.parent = null
     val checked: HashSet[util.Node] = HashSet(root)
     val queue: Queue[util.Node] = Queue(root)
