@@ -37,7 +37,7 @@ object BFS {
 
   //returns the distance between root and goal, and the goal node itself that contains
   //the start of the path to root
-  def build(root: util.Node, goal: util.Node): util.Node = {
+  def build(root: util.Node, goal: util.Node): Boolean = {
 
     root.parent = null
     goal.parent = null
@@ -48,9 +48,9 @@ object BFS {
       val currentNode = queue.dequeue()
 
       if(currentNode == goal)
-        return goal
+        return true
 
-      for(e <- currentNode.getAdjacencyList; if !checked.contains(e.terminalNode)){
+      for(e <- currentNode.getAdjacencyList; if !checked.contains(e.terminalNode); e.residualCapacity != 0){
         checked.add(e.terminalNode)
         e.terminalNode.parent = currentNode
         currentNode.child = e.terminalNode
@@ -58,6 +58,6 @@ object BFS {
       }
     }
 
-    null //goal not found
+    false //goal not found
   }
 }

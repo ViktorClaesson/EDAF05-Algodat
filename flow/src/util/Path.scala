@@ -9,12 +9,12 @@ class Path (root: Node, goal: Node){
 
   val edges = ArrayBuffer.empty[Edge]
 
-  def update(): Int ={
+  def update() = {
     val min = getMin(root)
-    
+    edges.foreach(e => e.update(min))
   }
 
-  def getMin(current: Node): Int = {
+  private def getMin(current: Node): Int = {
     if(current == goal)
       return Integer.MAX_VALUE
 
