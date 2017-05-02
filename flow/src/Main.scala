@@ -12,11 +12,9 @@ object Main {
 
   val railroad = Builder.railroad._1
   val root = railroad.find(_.name == "ORIGINS").get
-  val goal = railroad.find(_.name == "48").get
+  val goal = railroad.find(_.name == "DESTINATIONS").get
 
-  BFS.build(root, goal)
-  println(BFS.getDistance(goal))
-  println(BFS.getShortestPath(root, goal))
-
-  }
+  FordFulkerson.run(root, goal)
+  
+}
 

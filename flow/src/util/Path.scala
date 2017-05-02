@@ -9,12 +9,12 @@ class Path (root: Node, goal: Node){
 
   val edges = ArrayBuffer.empty[Edge]
 
-  def update() = {
-    val min = getMin(root)
+  def updateResidualCapacity() = {
+    val min = getMinResidualCapacity(root)
     edges.foreach(e => e.update(min))
   }
 
-  private def getMin(current: Node): Int = {
+  private def getMinResidualCapacity(current: Node): Int = {
     if(current == goal)
       return Integer.MAX_VALUE
 
@@ -22,6 +22,6 @@ class Path (root: Node, goal: Node){
     val edge = current.adjacencyList.find(e => e.terminalNode == child).get
     edges += edge
     val cap = edge.residualCapacity
-    return math.min(cap, getMin(child))
+    return math.min(cap, getMinResidualCapacity(child))
   }
 }
