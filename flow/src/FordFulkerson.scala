@@ -6,7 +6,7 @@ import util.{BFS, Node, Path}
 class FordFulkerson {
 
   def augment(): Unit ={
-    val b = bottleneck()
+    //val b = bottleneck()
   }
 
   def bottleneck(s: Node, t: Node): Int = {
