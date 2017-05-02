@@ -15,7 +15,7 @@ class Node (val name: String, val index: Int) {
     adjacencyList = adjacencyList :+ edge
   }
 
-  override def toString: String = s"$name ($index)"
+  override def toString: String = s"$index"
 
   def adjacencyString: String = toString + " -> (" + adjacencyList.mkString(", ") + ")"
 

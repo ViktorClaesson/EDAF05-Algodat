@@ -9,10 +9,12 @@ class Edge (val startingNode: Node, val terminalNode: Node, val capacity: Int){
 
   var siblingEdge: Edge = null
 
-  override def toString: String = s"[$capacity]- ${34.toChar}$terminalNode${34.toChar}"
+  override def toString: String = s"$startingNode $terminalNode $capacity"
 
   def update(min: Int) = {
-    residualCapacity -= min
-    siblingEdge.residualCapacity += min
+    if(capacity != -1) {
+      residualCapacity -= min
+      siblingEdge.residualCapacity += min
+    }
   }
 }

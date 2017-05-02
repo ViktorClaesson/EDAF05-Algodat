@@ -11,13 +11,13 @@ object FordFulkerson {
       path.updateResidualCapacity()
     }
 
-    minimalCut(s).foreach(println)
+    minimalCut(null, s).foreach(println)
   }
 
-  def minimalCut(current: Node): Vector[Edge] = {
-    val edges = current.adjacencyList.filter(e => e.residualCapacity != 0 && e.residualCapacity <= e.capacity)
-    val maxed = for(e <- edges.filter(e => e.residualCapacity == e.capacity)) yield e
-    maxed ++ (for(e <- edges.filterNot(e => e.residualCapacity == e.capacity)) yield minimalCut(e.terminalNode)).flatten
+  def minimalCut(prev: Node, current: Node): Vector[Edge] = {
+    val edges = current.adjacencyList.filter(e => e.residualCapacity < e.capacity || (e.capacity == -1 && e.terminalNode != prev))
+    val maxed = for(e <- edges.filter(e => e.residualCapacity == 0)) yield e
+    maxed ++ (for(e <- edges.filterNot(e => e.residualCapacity == 0)) yield minimalCut(current, e.terminalNode)).flatten
   }
 
 }
