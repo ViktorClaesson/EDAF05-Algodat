@@ -1,5 +1,8 @@
 import util.{BFS, Edge, Node, Path}
 
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.Queue
+
 /**
   * Created by Sebastian on 02/05/2017.
   */
@@ -11,13 +14,28 @@ object FordFulkerson {
       path.updateResidualCapacity()
     }
 
-    minimalCut(null, s).foreach(println)
+    val minCut = minimalCut(s).sortBy(_.index)
+    val edgeEdges = minCut.map(n => n.adjacencyList).flatten.distinct
+      .filter(e => e.residualCapacity == 0)
+      .filterNot(e => minCut.contains(e.terminalNode))
+    edgeEdges.sortBy(_.startingNode.index).foreach(println)
+    printf("Sum: %d\n", edgeEdges.map(e => e.capacity).sum)
   }
 
-  def minimalCut(prev: Node, current: Node): Vector[Edge] = {
-    val edges = current.adjacencyList.filter(e => e.residualCapacity < e.capacity || (e.capacity == -1 && e.terminalNode != prev))
-    val maxed = for(e <- edges.filter(e => e.residualCapacity == 0)) yield e
-    maxed ++ (for(e <- edges.filterNot(e => e.residualCapacity == 0)) yield minimalCut(current, e.terminalNode)).flatten
-  }
+  // Returns a Vector of all the nodes that are in the minimal cut
+  def minimalCut(root: Node): Vector[Node] = {
+    val visitedNodes = ArrayBuffer(root)
+    val queue = Queue(root)
 
+    do {
+      val current = queue.dequeue()
+      val edges = current.adjacencyList
+        .filterNot(e => e.residualCapacity == 0)
+        .filterNot(e => visitedNodes.contains(e.terminalNode))
+      visitedNodes ++= edges.map(e => e.terminalNode)
+      edges.foreach(e => queue.enqueue(e.terminalNode))
+    } while (!queue.isEmpty)
+
+    visitedNodes.toVector
+  }
 }
