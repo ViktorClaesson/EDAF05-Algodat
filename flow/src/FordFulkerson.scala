@@ -1,4 +1,4 @@
-import util.{BFS, Edge, Node, Path}
+import util.{BFS, Node, Path}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.Queue
@@ -14,7 +14,7 @@ object FordFulkerson {
       path.updateResidualCapacity()
     }
 
-    val minCut = minimalCut(s).sortBy(_.index)
+    val minCut = minimalCut(s)
     val edgeEdges = minCut.map(n => n.adjacencyList).flatten.distinct
       .filter(e => e.residualCapacity == 0)
       .filterNot(e => minCut.contains(e.terminalNode))
